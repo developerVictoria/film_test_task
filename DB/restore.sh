@@ -17,7 +17,7 @@ fi
 
 echo "Container IP: $CONTAINER_IP"
 
-# Wait for PostgreSQL to be ready
+
 wait_for_postgres() {
     echo "Waiting for PostgreSQL to start..."
     while ! PGPASSWORD=postgres psql -h $CONTAINER_IP -p 5432 -U postgres -d postgres -c "SELECT 1" >/dev/null 2>&1; do
@@ -27,14 +27,14 @@ wait_for_postgres() {
     echo "PostgreSQL is ready!"
 }
 
-# Wait for the database to be ready
+
 wait_for_postgres
 
-# Create the dvdrental database
+
 echo "Creating database..."
 PGPASSWORD=postgres psql -h $CONTAINER_IP -p 5432 -U postgres -d postgres -c "CREATE DATABASE dvdrental;"
 
-# Restore the database from the backup
+
 echo "Restoring database from backup..."
 PGPASSWORD=postgres pg_restore -h $CONTAINER_IP -p 5432 -U postgres -d dvdrental dvdrental.tar
 
