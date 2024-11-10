@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Check if container ID is provided
+
 if [ -z "$1" ]; then
     echo "Error: Container ID not provided"
     echo "Usage: $0 <container_id>"
     exit 1
 fi
 
-# Get container IP address
+
 CONTAINER_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1)
 
 if [ -z "$CONTAINER_IP" ]; then
